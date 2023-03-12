@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SafeIn_Api.Controllers;
 using SafeIn_Api.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace SafeIn_Api.Controllers
 {
@@ -34,7 +35,7 @@ namespace SafeIn_Api.Controllers
         {
             var id = _userManager.GetUserId(User);
             var user = _userManager.FindByIdAsync(id).Result;
-
+            var company = _context.Companies.FindAsync(user.CompanyId).Result;
             var door = new Door()
             {
                 DoorId = Guid.NewGuid().ToString(),
@@ -43,7 +44,7 @@ namespace SafeIn_Api.Controllers
             };
             _context.Doors.Add(door);
             _context.SaveChanges();
-            return StatusCode(201);
+            return Ok($"New door of {company.Name} company is created successfully");
         }
 
 
@@ -80,7 +81,7 @@ namespace SafeIn_Api.Controllers
             await _userManager.AddToRoleAsync(newEmployee, "Employee");
             if (result.Succeeded)
             {
-                return Ok($"New employee of {company.Name} company is  created successfully");
+                return Ok($"New employee of {company.Name} company is created successfully");
             }
             else
             {
