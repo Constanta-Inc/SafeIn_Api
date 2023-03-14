@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SafeIn_Api.Models;
+using SafeInApiLocal.Models;
 
 namespace SafeIn_Api.Controllers
 {
@@ -95,28 +96,57 @@ namespace SafeIn_Api.Controllers
         }
 
 
-        //[HttpDelete("admin")]
-        //public async Task<IActionResult> DeleteEmployee(string adminId)
-        //{
-        //    //var id = _userManager.GetUserId(User);
-        //    var user = _userManager.FindByIdAsync(adminId).Result;
-        //    var company = _context.Companies.Find(user.CompanyId);
 
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequestErrorMessages();
-        //    }
-        //    var result = await _userManager.DeleteAsync(user);
-        //    _context.SaveChanges();
-        //    if (result.Succeeded)
-        //    {
-        //        return Ok($"Admin of {company.Name} company is deleted successfully");
-        //    }
-        //    else
-        //    {
-        //        return StatusCode(500, result.Errors.Select(e => new { Msg = e.Code, Desc = e.Description }).ToList());
-        //    }
-        //}
+        [HttpDelete("admin")]
+        public async Task<IActionResult> DeleteEmployee(string email)
+        {
+            var id = _userManager.GetUserId(User);
+            var admin = _userManager.FindByIdAsync(id).Result;
+            var user = _userManager.FindByEmailAsync(email).Result;
+            var company = _context.Companies.FindAsync(user.CompanyId).Result;
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequestErrorMessages();
+            }
+            var result = await _userManager.DeleteAsync(user);
+            _context.SaveChanges();
+            if (result.Succeeded)
+            {
+                return Ok($"Admin of {company.Name} company is deleted successfully");
+
+            }
+            else
+            {
+                return StatusCode(500, result.Errors.Select(e => new { Msg = e.Code, Desc = e.Description }).ToList());
+            }
+        }
+        [HttpGet("admins")]
+        public async Task<IActionResult> GetEmployees()
+        {
+            var id = _userManager.GetUserId(User);
+            var user = _userManager.FindByIdAsync(id).Result;
+            var company = _context.Companies.FindAsync(user.CompanyId).Result;
+            var response = new List<InfoResponse>();
+            if (!ModelState.IsValid)
+            {
+                return BadRequestErrorMessages();
+            }
+            foreach (var i in _context.Users.ToList())
+            {
+                string Role = _userManager.GetRolesAsync(i).Result[0];
+                if (Role == "Admin")
+                    response.Add(new InfoResponse
+                    {
+                        Name = i.UserName,
+                        Email = i.Email,
+                        Company = _context.Companies.FindAsync(i.CompanyId).Result.Name,
+                        Role = Role
+                    });
+            }
+            return Ok(response);//Ok(_context.Users.Where(a => a.CompanyId == user.CompanyId).ToList());
+
+        }
 
     }
 }

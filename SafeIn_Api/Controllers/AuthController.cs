@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SafeIn_Api.Models;
 using System.Data;
@@ -19,13 +20,14 @@ namespace SafeIn_Api.Controllers
         public IConfiguration _configuration;
         private UserManager<Employee> _userManager;
         private RoleManager<IdentityRole> _roleManager;
-
-        public AuthController(IConfiguration config, UserManager<Employee> userManager, RoleManager<IdentityRole> roleManager)
+        private AppDbContext _context;
+        public AuthController(IConfiguration config, UserManager<Employee> userManager, AppDbContext context,RoleManager<IdentityRole> roleManager)
         {
 
             _configuration = config;
             _userManager = userManager;
             _roleManager = roleManager;
+            _context = context;
         }
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginRequest request)
@@ -164,9 +166,9 @@ namespace SafeIn_Api.Controllers
                         new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
                         new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                         new Claim(ClaimTypes.Name, user.UserName),
-                       //new Claim("LastName", user.LastName),
+                //new Claim("LastName", user.LastName),
                         new Claim("Email", user.Email),
-                        new Claim("CompanyId", user.CompanyId)
+                        new Claim("Company", _context.Companies.FindAsync(user.CompanyId).Result.Name)
                         //new Claim(ClaimTypes.Role, await _userManager.GetRolesAsync(user))
                     };
             foreach (var role in await _userManager.GetRolesAsync(user))
