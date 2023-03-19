@@ -89,7 +89,7 @@ namespace SafeIn_Api.Controllers
                 return StatusCode(500, result.Errors.Select(e => new { Msg = e.Code, Desc = e.Description }).ToList());
             }
         }
-        [HttpDelete("employee")]
+        [HttpDelete("employee/{email}")]
         public async Task<IActionResult> DeleteEmployee(string email)
         {
             var id = _userManager.GetUserId(User);

@@ -76,3 +76,8 @@ D:\SafeIn_Api\SafeIn_Api\obj\Debug\net7.0\refint\SafeIn_Api.dll
 D:\SafeIn_Api\SafeIn_Api\obj\Debug\net7.0\SafeIn_Api.pdb
 D:\SafeIn_Api\SafeIn_Api\obj\Debug\net7.0\SafeIn_Api.genruntimeconfig.cache
 D:\SafeIn_Api\SafeIn_Api\obj\Debug\net7.0\ref\SafeIn_Api.dll
+D:\SafeIn_Api\SafeIn_Api\bin\Debug\net7.0\Humanizer.dll
+D:\SafeIn_Api\SafeIn_Api\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\SafeIn_Api\SafeIn_Api\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+D:\SafeIn_Api\SafeIn_Api\bin\Debug\net7.0\Mono.TextTemplating.dll
+D:\SafeIn_Api\SafeIn_Api\bin\Debug\net7.0\System.CodeDom.dll
