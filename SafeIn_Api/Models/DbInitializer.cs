@@ -55,6 +55,34 @@ namespace SafeIn_Api.Models
                 }
 
 
+                if (!context.Users.Any(usr => usr.Email == "vitalii.seniuk@lnu.edu.ua"))
+                {
+                    var user = new Employee()
+                    {
+                        UserName = "VitaliiSeniuk",
+                        Email = "vitalii.seniuk@lnu.edu.ua",
+                        //CompanyId = companyConstanta.CompanyId,
+                        Company = companyConstanta
+                    };
+                    var userResult = await _userManager.CreateAsync(user, "String-123");
+                    context.SaveChanges();
+                    //   companyConstanta.Employees.Add(user);
+                    //}
+                }
+                if (!context.Users.Any(usr => usr.Email == "user@lnu.edu.ua"))
+                {
+                    var user = new Employee()
+                    {
+                        UserName = "user",
+                        Email = "user@lnu.edu.ua",
+                        //CompanyId = companyConstanta.CompanyId,
+                        Company = companyConstanta
+                    };
+                    var userResult = await _userManager.CreateAsync(user, "String-123");
+                    context.SaveChanges();
+                    //   companyConstanta.Employees.Add(user);
+                    //}
+                }
                 //add roles
                 //foreach (IdentityRole role in _roleManager.Roles)
                 //{
@@ -68,18 +96,29 @@ namespace SafeIn_Api.Models
                 }
 
                 //making SuperAdmin
-                var adminUser = _userManager.FindByEmailAsync("khrystyna-yaryna.kolba@lnu.edu.ua").Result;
-                await _userManager.AddToRoleAsync(adminUser, "SuperAdmin");
+                var superAdminUser = _userManager.FindByEmailAsync("khrystyna-yaryna.kolba@lnu.edu.ua").Result;
+                await _userManager.AddToRoleAsync(superAdminUser, "SuperAdmin");
+                //making admin
+                var adminUser = _userManager.FindByEmailAsync("vitalii.seniuk@lnu.edu.ua").Result;
+                await _userManager.AddToRoleAsync(adminUser, "Admin");
+                //making employee
+                var Employee = _userManager.FindByEmailAsync("user@lnu.edu.ua").Result;
+                await _userManager.AddToRoleAsync(adminUser, "Employee");
                 //await _userManager.RemoveFromRolesAsync(adminUser, new string[] {"Employee" , "Admin"});
                 //add first test door 
-                var door = new Door()
+                if (!context.Doors.Any(door => door.Company == companyConstanta))
                 {
-                    DoorId = Guid.NewGuid().ToString(),
-                    Company = companyConstanta
-                };
-                //companyConstanta.Doors.Add(door);
-                context.Doors.Add(door);
+                    var door = new Door()
+                    {
+                        DoorId = Guid.NewGuid().ToString(),
+                        Company = companyConstanta
+                    };
+                    //companyConstanta.Doors.Add(door);
+                    context.Doors.Add(door);
+                    context.SaveChanges();
+                }
                 context.SaveChanges();
+
             }
         }
     }
