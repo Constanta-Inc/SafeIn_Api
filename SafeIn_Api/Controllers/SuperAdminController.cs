@@ -138,7 +138,7 @@ namespace SafeIn_Api.Controllers
                 if (Role == "Admin")
                     response.Add(new InfoResponse
                     {
-                        Name = i.UserName,
+                        UserName = i.UserName,
                         Email = i.Email,
                         Company = _context.Companies.FindAsync(i.CompanyId).Result.Name,
                         Role = Role
