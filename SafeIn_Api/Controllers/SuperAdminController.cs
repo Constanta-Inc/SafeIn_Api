@@ -148,5 +148,41 @@ namespace SafeIn_Api.Controllers
 
         }
 
+        [HttpPut("edit")]
+        public async Task<IActionResult> Edit(string email, PutRequest request)
+        {
+            var id = _userManager.GetUserId(User);
+            //var admin = _userManager.FindByIdAsync(id).Result;
+            var user = _userManager.FindByEmailAsync(email).Result;
+
+            if (!ModelState.IsValid || _userManager.GetRolesAsync(user).Result[0] != "Admin")
+            {
+                return BadRequestErrorMessages();
+            }
+            if (request.Email != user.Email)
+            {
+                var isEmailAlreadyRegistered = await _userManager.FindByEmailAsync(request.Email) != null;
+                if (isEmailAlreadyRegistered)
+                {
+                    return Conflict($"Email {request.Email} is already registered.");
+                }
+                user.Email = request.Email;
+            }
+            if (request.UserName != user.UserName)
+            {
+                user.UserName = request.UserName;
+            }
+            var result = await _userManager.UpdateAsync(user);
+            var resultPassword = await _userManager.ChangePasswordAsync(user, request.CurrentPassword, request.Password);
+            if (result.Succeeded && resultPassword.Succeeded)
+            {
+                return Ok();
+            }
+            else
+            {
+                return Conflict($"User was not updated");
+            }
+        }
+
     }
 }
