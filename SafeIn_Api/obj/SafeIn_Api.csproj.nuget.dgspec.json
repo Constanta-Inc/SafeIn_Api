@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\SafeIn_Api\\SafeIn_Api\\SafeIn_Api.csproj": {}
+    "C:\\Margo\\GITHUB\\SafeIn_Api\\SafeIn_Api\\SafeIn_Api.csproj": {}
   },
   "projects": {
-    "D:\\SafeIn_Api\\SafeIn_Api\\SafeIn_Api.csproj": {
+    "C:\\Margo\\GITHUB\\SafeIn_Api\\SafeIn_Api\\SafeIn_Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SafeIn_Api\\SafeIn_Api\\SafeIn_Api.csproj",
+        "projectUniqueName": "C:\\Margo\\GITHUB\\SafeIn_Api\\SafeIn_Api\\SafeIn_Api.csproj",
         "projectName": "SafeIn_Api",
-        "projectPath": "D:\\SafeIn_Api\\SafeIn_Api\\SafeIn_Api.csproj",
-        "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
-        "outputPath": "D:\\SafeIn_Api\\SafeIn_Api\\obj\\",
+        "projectPath": "C:\\Margo\\GITHUB\\SafeIn_Api\\SafeIn_Api\\SafeIn_Api.csproj",
+        "packagesPath": "C:\\Users\\Professional\\.nuget\\packages\\",
+        "outputPath": "C:\\Margo\\GITHUB\\SafeIn_Api\\SafeIn_Api\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\ACER\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Professional\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
