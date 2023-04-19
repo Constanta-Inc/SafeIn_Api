@@ -78,7 +78,12 @@ namespace SafeIn_Api.Controllers
             //This endpoint is created so any user can validate their token
             return Ok("Token is valid");
         }
-
+        [HttpGet("healthCheck")]
+        public async Task<IActionResult> HealthCheck()
+        {
+            //This endpoint is created so any user can validate their token
+            return Ok("Api is working");
+        }
         //[HttpPost("register")]
         //public async Task<IActionResult> Register(RegisterRequest registerRequest)
         //{
