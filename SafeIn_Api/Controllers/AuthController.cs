@@ -10,6 +10,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace SafeIn_Api.Controllers
 {
@@ -236,6 +237,40 @@ namespace SafeIn_Api.Controllers
                 throw new SecurityTokenException("Invalid token");
             return principal;
         }
+
+
+        [HttpPut("edit")]
+        public async Task<IActionResult> Edit(PutRequest request)
+        { 
+            var id = _userManager.GetUserId(User);
+            var user = _userManager.FindByIdAsync(id).Result;
+            if (!ModelState.IsValid)
+            {
+                return BadRequestErrorMessages();
+            }
+            if(request.Email != user.Email) 
+            {
+                var isEmailAlreadyRegistered = await _userManager.FindByEmailAsync(request.Email) != null;
+                if (isEmailAlreadyRegistered)
+                {
+                    return Conflict($"Email {request.Email} is already registered.");
+                }
+                user.Email = request.Email;
+            }
+            if (request.UserName != user.UserName)
+            {
+                user.UserName = request.UserName;
+            }
+            var result = await _userManager.UpdateAsync(user);
+            var resultPassword = await _userManager.ChangePasswordAsync(user, request.CurrentPassword, request.Password);
+            if (result.Succeeded && resultPassword.Succeeded)
+            {
+               return Ok();
+            }
+            else
+            {
+                return Conflict($"User was not updated");
+            }
+        }
     }
-    
 }

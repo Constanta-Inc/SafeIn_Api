@@ -31,7 +31,7 @@ namespace SafeIn_Api.Controllers
             InfoResponse response = new InfoResponse();
             var id = _userManager.GetUserId(User);
             var user = _userManager.FindByIdAsync(id).Result;
-            response.Name = user.UserName;
+            response.UserName = user.UserName;
             response.Email = user.Email;
             response.Company =  _context.Companies.FindAsync(user.CompanyId).Result.Name;
             response.Role = _userManager.GetRolesAsync(user).Result[0];
