@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SafeIn_Api.Models;
 
@@ -11,26 +12,28 @@ using SafeIn_Api.Models;
 namespace IdentityTest.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231017223107_DepartmentsAndEntrances")]
+    partial class DepartmentsAndEntrances
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.12")
+                .HasAnnotation("ProductVersion", "7.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("DepartmentEmployee", b =>
                 {
-                    b.Property<string>("DepartmentsId")
+                    b.Property<string>("DepartmentsDepartmentId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("EmployeesId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("DepartmentsId", "EmployeesId");
+                    b.HasKey("DepartmentsDepartmentId", "EmployeesId");
 
                     b.HasIndex("EmployeesId");
 
@@ -172,28 +175,28 @@ namespace IdentityTest.Migrations
 
             modelBuilder.Entity("SafeIn_Api.Models.Company", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("CompanyId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("CompanyId");
 
                     b.ToTable("Companies");
                 });
 
             modelBuilder.Entity("SafeIn_Api.Models.Department", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("DepartmentId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CompanyId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
+                    b.HasKey("DepartmentId");
 
                     b.HasIndex("CompanyId");
 
@@ -202,14 +205,19 @@ namespace IdentityTest.Migrations
 
             modelBuilder.Entity("SafeIn_Api.Models.Door", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("DoorId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("DepartmentId")
+                    b.Property<string>("CompanyId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
+                    b.Property<string>("DepartmentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("DoorId");
+
+                    b.HasIndex("CompanyId");
 
                     b.HasIndex("DepartmentId");
 
@@ -295,10 +303,10 @@ namespace IdentityTest.Migrations
 
             modelBuilder.Entity("SafeIn_Api.Models.Entrance", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("EntranceId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("DateTime")
+                    b.Property<DateTime>("DateTine")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EmployeeId")
@@ -308,7 +316,7 @@ namespace IdentityTest.Migrations
                     b.Property<bool>("Entered")
                         .HasColumnType("bit");
 
-                    b.HasKey("Id");
+                    b.HasKey("EntranceId");
 
                     b.HasIndex("EmployeeId");
 
@@ -319,7 +327,7 @@ namespace IdentityTest.Migrations
                 {
                     b.HasOne("SafeIn_Api.Models.Department", null)
                         .WithMany()
-                        .HasForeignKey("DepartmentsId")
+                        .HasForeignKey("DepartmentsDepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -394,13 +402,17 @@ namespace IdentityTest.Migrations
 
             modelBuilder.Entity("SafeIn_Api.Models.Door", b =>
                 {
-                    b.HasOne("SafeIn_Api.Models.Department", "Department")
-                        .WithMany("Doors")
-                        .HasForeignKey("DepartmentId")
+                    b.HasOne("SafeIn_Api.Models.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Department");
+                    b.HasOne("SafeIn_Api.Models.Department", null)
+                        .WithMany("Doors")
+                        .HasForeignKey("DepartmentId");
+
+                    b.Navigation("Company");
                 });
 
             modelBuilder.Entity("SafeIn_Api.Models.Employee", b =>

@@ -42,7 +42,7 @@ namespace SafeIn_Api.Controllers
             {
                 var company = new Company()
                 {
-                    CompanyId = Guid.NewGuid().ToString(),
+                    Id = Guid.NewGuid().ToString(),
                     Name = CompanyName
                 };
                 _context.Companies.Add(company);

@@ -34,18 +34,19 @@ namespace SafeIn_Api.Controllers
         [HttpPost("doors")]
         public async Task<ActionResult<Door>> AddDoor()
         {
-            var id = _userManager.GetUserId(User);
-            var user = _userManager.FindByIdAsync(id).Result;
-            var company = _context.Companies.FindAsync(user.CompanyId).Result;
-            var door = new Door()
-            {
-                DoorId = Guid.NewGuid().ToString(),
-                Company = _context.Companies.FindAsync(user.CompanyId).Result
+            //var id = _userManager.GetUserId(User);
+            //var user = _userManager.FindByIdAsync(id).Result;
+            //var company = _context.Companies.FindAsync(user.CompanyId).Result;
+            //var door = new Door()
+            //{
+            //    DoorId = Guid.NewGuid().ToString(),
+            //    Company = _context.Companies.FindAsync(user.CompanyId).Result
 
-            };
-            _context.Doors.Add(door);
-            _context.SaveChanges();
-            return Ok($"New door of {company.Name} company is created successfully");
+            //};
+            //_context.Doors.Add(door);
+            //_context.SaveChanges();
+            //return Ok($"New door of {company.Name} company is created successfully");
+            throw new NotImplementedException();
         }
 
 
