@@ -10,9 +10,10 @@ namespace SafeIn_Api.Models
         {
 
         }
-        //DbSet<Door> Doors { get; set; }
         public DbSet<Door> Doors { get; set; }
         public DbSet<Company> Companies { get; set; }
+        public DbSet<Entrance> Entrances { get; set; }
+        public DbSet<Department> Departments { get; set; } 
     }
 }
 

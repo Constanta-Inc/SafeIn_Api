@@ -27,7 +27,7 @@ namespace SafeIn_Api.Models
                 {
                     var company = new Company()
                     {
-                        CompanyId = Guid.NewGuid().ToString(),
+                        Id = Guid.NewGuid().ToString(),
                         Name = "Constanta"
                     };
                     context.Companies.Add(company);
@@ -72,13 +72,13 @@ namespace SafeIn_Api.Models
                 await _userManager.AddToRoleAsync(adminUser, "SuperAdmin");
                 //await _userManager.RemoveFromRolesAsync(adminUser, new string[] {"Employee" , "Admin"});
                 //add first test door 
-                var door = new Door()
-                {
-                    DoorId = Guid.NewGuid().ToString(),
-                    Company = companyConstanta
-                };
+                //var door = new Door()
+                //{
+                //    DoorId = Guid.NewGuid().ToString(),
+                //    Company = companyConstanta
+                //};
                 //companyConstanta.Doors.Add(door);
-                context.Doors.Add(door);
+                //context.Doors.Add(door);
                 context.SaveChanges();
             }
         }

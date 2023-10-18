@@ -6,13 +6,12 @@ namespace SafeIn_Api.Models
     public class Door
     {
         [Key]
-        public string DoorId { get; set; }
+        public string Id { get; set; }
 
 
-        //[ForeignKey]
-        //public string CompanyId { get; set; }
-        public Company Company { get; set; }
-        public string CompanyId { get; set; }
+        public string DepartmentId { get; set; }
+
+        public Department Department { get; set; }
 
 
     }
